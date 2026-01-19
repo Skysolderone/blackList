@@ -26,7 +26,13 @@ type UpdateRequest struct {
 // 认证检查 - Easegress 调用
 func authHandler(w http.ResponseWriter, r *http.Request) {
 	ip := r.Header.Get("X-Real-Ip")
-	wallet := r.Header.Get("X-Wallet-Address")
+	var datamap map[string]interface{}
+	if err := json.NewDecoder(r.Body).Decode(&datamap); err != nil {
+		http.Error(w, err.Error(), 400)
+		return
+	}
+
+	wallet := datamap["wallet"].(string)
 
 	store.RLock()
 	blocked := store.IPs[ip] || (wallet != "" && store.Wallets[wallet])
