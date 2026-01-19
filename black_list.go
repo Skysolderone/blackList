@@ -33,10 +33,14 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 	store.RUnlock()
 
 	if blocked {
-		w.WriteHeader(403)
+		w.WriteHeader(502)
+
 		return
 	}
+
+	//{"auth":true}
 	w.WriteHeader(200)
+	w.Write([]byte("{\"auth\":true}"))
 }
 
 // 查看黑名单

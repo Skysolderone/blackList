@@ -1,0 +1,35 @@
+#部署yaml
+services:
+  blacklist:
+    image: blacklist:latest
+    container_name: blacklist
+    restart: always
+    ports:
+      - "8888:8888"
+
+  easegress:
+    image: megaease/easegress:latest
+    container_name: easegress
+    restart: always
+    ports:
+      - "2381:2381"
+      - "10080:10080"
+      - "10081:10081"
+    volumes:
+      - ./data:/opt/easegress/data
+      - ./logs:/opt/easegress/log
+      - ./config:/opt/easegress/config
+    command: easegress-server -f /opt/easegress/config/config.yaml
+    depends_on:
+      - blacklist
+
+  portal:
+    image: megaease/easegress-portal:latest
+    container_name: easegress-portal
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - API_ADDR=http://54.65.152.26:2381
+    depends_on:
+      - easegress
