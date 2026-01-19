@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"sync"
 )
@@ -32,7 +33,10 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	wallet := datamap["wallet"].(string)
+	wallet, _ := datamap["wallet"].(string)
+
+	// 日志打印认证请求信息
+	fmt.Printf("authHandler request - ip: %s, wallet: %s\n", ip, wallet)
 
 	store.RLock()
 	blocked := store.IPs[ip] || (wallet != "" && store.Wallets[wallet])
