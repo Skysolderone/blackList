@@ -43,8 +43,8 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 	store.RUnlock()
 
 	if blocked {
-		w.WriteHeader(502)
-
+		w.WriteHeader(403)
+		w.Write([]byte("{\"auth\":false}"))
 		return
 	}
 
