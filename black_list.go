@@ -28,11 +28,11 @@ type UpdateRequest struct {
 func authHandler(w http.ResponseWriter, r *http.Request) {
 	ip := r.Header.Get("X-Forwarded-For") //ip
 	wallet := r.Header.Get("X-Wallet")    //wallet
-	var datamap map[string]interface{}
-	if err := json.NewDecoder(r.Body).Decode(&datamap); err != nil {
-		http.Error(w, err.Error(), 400)
-		return
-	}
+	// var datamap map[string]interface{}
+	// if err := json.NewDecoder(r.Body).Decode(&datamap); err != nil {
+	// 	http.Error(w, err.Error(), 400)
+	// 	return
+	// }
 
 	// wallet, _ := datamap["wallet"].(string)
 
