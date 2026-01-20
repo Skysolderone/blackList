@@ -26,8 +26,8 @@ type UpdateRequest struct {
 
 // 认证检查 - Easegress 调用
 func authHandler(w http.ResponseWriter, r *http.Request) {
-	ip := r.Header.Get("X-Forwarded-For") //ip
-	wallet := r.Header.Get("X-Wallet")    //wallet
+	ip := r.Header.Get("x-forwarded-for") //ip
+	wallet := r.Header.Get("x-wallet")    //wallet
 	// var datamap map[string]interface{}
 	// if err := json.NewDecoder(r.Body).Decode(&datamap); err != nil {
 	// 	http.Error(w, err.Error(), 400)
